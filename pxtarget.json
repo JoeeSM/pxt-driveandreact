@@ -1,7 +1,7 @@
 {
-    "id": "sample",
-    "name": "sample",
-    "title": "MakeCode Editor Sample",
+    "id": "pxt-driveandreact",
+    "name": "pxt-driveandreact",
+    "title": "MakeCode Drive and React Simulator",
     "corepkg": "core",
     "cloud": {
         "workspace": false,
