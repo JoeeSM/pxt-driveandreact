@@ -1,7 +1,7 @@
 {
-    "id": "sample",
-    "name": "sample",
-    "title": "MakeCode Editor Sample",
+    "id": "driveandreact",
+    "name": "driveandreact",
+    "title": "Drive and React Simulator",
     "corepkg": "core",
     "cloud": {
         "workspace": false,
@@ -23,7 +23,7 @@
         "autoRun": true
     },
     "appTheme": {
-        "logoUrl": "https://github.com/Microsoft/pxt-sample",
+        "logoUrl": "https://github.com/JoeeSM/pxt-driveandreact",
         "homeUrl": "http://microsoft.github.io/pxt-sample/",
         "privacyUrl": "https://go.microsoft.com/fwlink/?LinkId=521839",
         "termsOfUseUrl": "https://go.microsoft.com/fwlink/?LinkID=206977",
