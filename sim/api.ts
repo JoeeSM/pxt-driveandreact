@@ -1,22 +1,5 @@
 /// <reference path="../libs/core/enums.d.ts"/>
 
-namespace pxsim.hare {
-    /**
-     * This is hop
-     */
-    //% blockId="sampleHop" block="hop %hop on color %color=colorNumberPicker"
-    //% hop.fieldEditor="gridpicker"
-    export function hop(hop: Hop, color: number) {
-
-    }
-
-    //% blockId=sampleOnLand block="on land"
-    //% optionalVariableArgs
-    export function onLand(handler: (height: number, more: number, most: number) => void) {
-
-    }
-}
-
 namespace pxsim.turtle {
     /**
      * Moves the sprite forward

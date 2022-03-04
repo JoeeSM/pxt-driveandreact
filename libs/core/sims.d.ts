@@ -1,19 +1,4 @@
 // Auto-generated from simulator. Do not edit.
-declare namespace hare {
-    /**
-     * This is hop
-     */
-    //% blockId="sampleHop" block="hop %hop on color %color=colorNumberPicker"
-    //% hop.fieldEditor="gridpicker"
-    //% shim=hare::hop
-    function hop(hop: Hop, color: number): void;
-
-    //% blockId=sampleOnLand block="on land"
-    //% optionalVariableArgs
-    //% shim=hare::onLand
-    function onLand(handler: (height: number, more: number, most: number) => void): void;
-
-}
 declare namespace turtle {
     /**
      * Moves the sprite forward
