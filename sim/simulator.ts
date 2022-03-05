@@ -21,14 +21,15 @@ namespace pxsim {
      */
     export class Board extends pxsim.BaseBoard {
         public bus: EventBus;
+        public baseBoard: BaseBoard;
         public element : SVGSVGElement;
         public spriteElement: SVGImageElement;
         public sprite : Sprite;
         
         constructor() {
             super();
-            this.bus = new EventBus(runtime);
-            this.spriteElement = <SVGImageElement>this.element.getElementById('svgsprite');
+            this.bus = new EventBus(runtime, this.baseBoard);
+            this.spriteElement = <SVGImageElement>this.element.getElementById('sprite');
             this.sprite = new Sprite()
         }
         
