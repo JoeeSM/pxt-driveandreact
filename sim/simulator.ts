@@ -29,6 +29,7 @@ namespace pxsim {
         constructor() {
             super();
             this.bus = new EventBus(runtime, this.baseBoard);
+            this.element = <SVGSVGElement><any>document.getElementById('svgcanvas');
             this.spriteElement = <SVGImageElement>this.element.getElementById('sprite');
             this.sprite = new Sprite()
         }
