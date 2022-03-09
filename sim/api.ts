@@ -88,12 +88,12 @@ namespace pxsim {
          * The X-coordiante
          */
         //%
-        public x = 100;
+        public x = 50;
          /**
          * The Y-coordiante
          */
         //%
-        public y = 100;
+        public y = 50;
         public angle = 90;
         
         constructor() {

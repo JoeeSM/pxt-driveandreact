@@ -21,29 +21,30 @@ namespace pxsim {
      */
     export class Board extends pxsim.BaseBoard {
         public bus: EventBus;
-        public baseBoard: BaseBoard;
-        public element : SVGSVGElement;
-        public spriteElement: SVGImageElement;
+        public baseBoard: Board;
         public sprite : Sprite;
+        public canvas : HTMLCanvasElement;
+        public image : HTMLImageElement;
+        public ctx : CanvasRenderingContext2D;
         
         constructor() {
             super();
+            this.canvas = <HTMLCanvasElement>document.getElementById("canvas");
+            this.ctx = this.canvas.getContext("2d");
+            this.image = <HTMLImageElement>document.getElementById("sprite");
             this.bus = new EventBus(runtime, this.baseBoard);
-            this.element = <SVGSVGElement><any>document.getElementById('svgcanvas');
-            this.spriteElement = <SVGImageElement>this.element.getElementById('sprite');
             this.sprite = new Sprite()
         }
         
         initAsync(msg: pxsim.SimulatorRunMessage): Promise<void> {
             document.body.innerHTML = ''; // clear children
-            document.body.appendChild(this.element);
+            document.body.appendChild(this.canvas);
 
             return Promise.resolve();
         }       
         
         updateView() {
-            this.spriteElement.x.baseVal.value = this.sprite.x;
-            this.spriteElement.y.baseVal.value = this.sprite.y;
+            //this.ctx.drawImage(this.image, 0, 0, this.sprite.x, this.sprite.y);
         }
     }
 }
