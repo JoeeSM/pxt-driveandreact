@@ -20,8 +20,7 @@ namespace pxsim {
      * Do not store state anywhere else!
      */
     export class Board extends pxsim.BaseBoard {
-        public bus: EventBus;
-        public baseBoard: Board;
+        public bus: pxsim.EventBus;
         public sprite : Sprite;
         public canvas : HTMLCanvasElement;
         public image : HTMLImageElement;
@@ -29,10 +28,16 @@ namespace pxsim {
         
         constructor() {
             super();
+            this.bus = new pxsim.EventBus(runtime, this);
             this.canvas = <HTMLCanvasElement>document.getElementById("canvas");
+            this.canvas.width = window.innerWidth;
+            this.canvas.height = window.innerHeight;
             this.ctx = this.canvas.getContext("2d");
-            this.image = <HTMLImageElement>document.getElementById("sprite");
-            this.bus = new EventBus(runtime, this.baseBoard);
+            var img = new HTMLImageElement;
+            img.src = '/static/robotBoard.png';
+            img.onload = () => {
+                this.ctx.drawImage(img, this.canvas.width / 2, this.canvas.height / 2);
+            }
             this.sprite = new Sprite()
         }
         
@@ -44,7 +49,8 @@ namespace pxsim {
         }       
         
         updateView() {
-            //this.ctx.drawImage(this.image, 0, 0, this.sprite.x, this.sprite.y);
+            //this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            //this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
         }
     }
 }
