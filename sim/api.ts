@@ -26,7 +26,7 @@ namespace pxsim.turtle {
             b.sprite.angle -= angle;
         else
             b.sprite.angle += angle;
-        return Promise.delay(400)
+        return pxsim.U.delay(400);
     }
 
     /**
@@ -114,7 +114,7 @@ namespace pxsim {
             if (this.x < 0 || this.y < 0)
                 board().bus.queue("TURTLE", "BUMP");
 
-            return Promise.delay(400)
+            return pxsim.U.delay(400)
         }
     }
 }
