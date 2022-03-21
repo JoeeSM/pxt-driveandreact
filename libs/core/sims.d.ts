@@ -7,7 +7,7 @@ declare namespace robot {
     //% weight=90
     //% blockId=sampleForward block="forward %steps"
     //% shim=robot::forwardAsync promise
-    function forward(steps: boolean): void;
+    function forward(): void;
 
     /**
      * Moves the sprite forward
@@ -82,7 +82,7 @@ declare namespace console {
          */
         //%
         //% shim=.forwardAsync promise
-        public forward(steps: boolean): void;
+        public forward(): void;
 
     }
 declare namespace sprites {

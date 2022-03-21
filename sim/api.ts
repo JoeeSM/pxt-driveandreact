@@ -7,8 +7,8 @@ namespace pxsim.robot {
      */
     //% weight=90
     //% blockId=sampleForward block="forward %steps"
-    export function forwardAsync(steps: boolean) {
-        return board().sprite.forwardAsync(steps)
+    export function forwardAsync() {
+        return board().sprite.forwardAsync()
     }
 
     /**
@@ -105,15 +105,10 @@ namespace pxsim {
          * Move the thing forward
          */
         //%
-        public forwardAsync(steps: boolean) {
+        public forwardAsync() {
 
-            if(steps === true){
-                this.x += 1;
-                this.y;
-            } else if (steps === false){
-                this.x;
-                this.y;
-            }
+            this.x += 1;
+            this.y;
 
             /*let deg = this.angle / 180 * Math.PI;
             this.x += Math.cos(deg) * steps * 10;

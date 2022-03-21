@@ -163,7 +163,6 @@
   "randint|param|min": "the lower inclusive bound, eg: 0",
   "robot": "Basic functionalities.",
   "robot.forward": "Moves the sprite forward",
-  "robot.forward|param|steps": "number of steps to move, eg: 1",
   "robot.onBump": "Triggers when the robot bumps a wall",
   "robot.turn": "Moves the sprite forward",
   "robot.turn|param|angle": "degrees to turn, eg:90",
