@@ -1,13 +1,13 @@
 // Auto-generated from simulator. Do not edit.
-declare namespace turtle {
+declare namespace robot {
     /**
      * Moves the sprite forward
      * @param steps number of steps to move, eg: 1
      */
     //% weight=90
     //% blockId=sampleForward block="forward %steps"
-    //% shim=turtle::forwardAsync promise
-    function forward(steps: number): void;
+    //% shim=robot::forwardAsync promise
+    function forward(steps: boolean): void;
 
     /**
      * Moves the sprite forward
@@ -17,15 +17,15 @@ declare namespace turtle {
     //% weight=85
     //% blockId=sampleTurn block="turn %direction|by %angle degrees"
     //% angle.min=-180 angle.max=180
-    //% shim=turtle::turnAsync promise
+    //% shim=robot::turnAsync promise
     function turn(direction: Direction, angle: number): void;
 
     /**
-     * Triggers when the turtle bumps a wall
+     * Triggers when the robot bumps a wall
      * @param handler 
      */
     //% blockId=onBump block="on bump"
-    //% shim=turtle::onBump
+    //% shim=robot::onBump
     function onBump(handler: () => void): void;
 
 }
@@ -82,7 +82,7 @@ declare namespace console {
          */
         //%
         //% shim=.forwardAsync promise
-        public forward(steps: number): void;
+        public forward(steps: boolean): void;
 
     }
 declare namespace sprites {

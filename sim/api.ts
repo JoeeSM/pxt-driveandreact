@@ -1,13 +1,13 @@
 /// <reference path="../libs/core/enums.d.ts"/>
 
-namespace pxsim.turtle {
+namespace pxsim.robot {
     /**
      * Moves the sprite forward
      * @param steps number of steps to move, eg: 1
      */
     //% weight=90
     //% blockId=sampleForward block="forward %steps"
-    export function forwardAsync(steps: number) {
+    export function forwardAsync(steps: boolean) {
         return board().sprite.forwardAsync(steps)
     }
 
@@ -30,14 +30,14 @@ namespace pxsim.turtle {
     }
 
     /**
-     * Triggers when the turtle bumps a wall
+     * Triggers when the robot bumps a wall
      * @param handler 
      */
     //% blockId=onBump block="on bump"
     export function onBump(handler: RefAction) {
         let b = board();
 
-        b.bus.listen("Turtle", "Bump", handler);
+        b.bus.listen("robot", "Bump", handler);
     }
 }
 
@@ -60,7 +60,7 @@ namespace pxsim.loops {
     //% help=functions/pause weight=54
     //% block="pause (ms) %pause" blockId=device_pause
     export function pauseAsync(ms: number) {
-        return Promise.delay(ms)
+        return pxsim.U.delay(ms)
     }
 }
 
@@ -105,14 +105,23 @@ namespace pxsim {
          * Move the thing forward
          */
         //%
-        public forwardAsync(steps: number) {
-            let deg = this.angle / 180 * Math.PI;
+        public forwardAsync(steps: boolean) {
+
+            if(steps === true){
+                this.x += 1;
+                this.y;
+            } else if (steps === false){
+                this.x;
+                this.y;
+            }
+
+            /*let deg = this.angle / 180 * Math.PI;
             this.x += Math.cos(deg) * steps * 10;
-            this.y += Math.sin(deg) * steps * 10;
+            this.y += Math.sin(deg) * steps * 10;*/
             board().updateView();
 
             if (this.x < 0 || this.y < 0)
-                board().bus.queue("TURTLE", "BUMP");
+                board().bus.queue("robot", "BUMP");
 
             return pxsim.U.delay(10)
         }
