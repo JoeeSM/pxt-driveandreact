@@ -25,8 +25,6 @@ namespace pxsim {
         public canvas : HTMLCanvasElement;
         public ctx : CanvasRenderingContext2D;
         public image : HTMLImageElement;
-        public prevX: number;
-        public prevY: number;
         
         constructor() {
             super();
@@ -38,59 +36,65 @@ namespace pxsim {
             this.canvas.height = window.innerHeight;
             this.ctx = this.canvas.getContext("2d");
             this.sprite = new Sprite();
-            this.sprite.x = this.canvas.width / 2 - this.image.width / 2;
-            this.sprite.y = this.canvas.height / 2 - this.image.height / 2;
+            this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
         }
         
         initAsync(msg: pxsim.SimulatorRunMessage): Promise<void> {
             document.body.innerHTML = ''; // clear children
             document.body.appendChild(this.canvas);
-            this.prevX = this.sprite.x;
-            this.prevY = this.sprite.y;
-            this.ctx.drawImage(this.image, this.prevX, this.prevY);
 
             return Promise.resolve();
         }       
         
         updateView() {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
+
+
+            /*
+            
+            This does nothing, only need above, rest is done in API?
+            
             let destinationX = this.sprite.x;
             let destinationY = this.sprite.y;
+            let prevX = this.imageX;
+            let prevY = this.imageY;
             const delayLength = 100;
 
-            for(let i = this.prevX; destinationX > i; i++){
-                this.prevX = this.prevX+1;
+            for(prevX; destinationX > prevX; prevX++){
+                this.imageX = this.imageX+1;
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                this.ctx.drawImage(this.image, this.prevX, this.prevY);
+                this.ctx.drawImage(this.image, prevX, prevY);
                 pxsim.U.delay(delayLength);
             }
-            for(let i = this.prevX; destinationX < i; i--){
-                this.prevX = this.prevX-1;
+            for(prevX; destinationX < prevX; prevX--){
+                this.imageX = this.imageX-1;
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                this.ctx.drawImage(this.image, this.prevX, this.prevY);
+                this.ctx.drawImage(this.image, prevX, prevY);
                 pxsim.U.delay(delayLength);
             }
-            for(let i = this.prevY; destinationY > i; i++){
-                this.prevY = this.prevY+1;
+            for(prevY; destinationY > prevY; prevY++){
+                this.imageY = this.imageY+1;
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                this.ctx.drawImage(this.image, this.prevX, this.prevY);
+                this.ctx.drawImage(this.image, prevX, prevY);
                 pxsim.U.delay(delayLength);
             }
-            for(let i = this.prevY; destinationY < i; i--){
-                this.prevY = this.prevY-1;
+            for(prevY; destinationY < prevY; prevY--){
+                this.imageY = this.imageY-1;
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                this.ctx.drawImage(this.image, this.prevX, this.prevY);
+                this.ctx.drawImage(this.image, prevX, prevY);
                 pxsim.U.delay(delayLength);
             }
 
-            /*if(destinationX > this.prevX){
-                this.prevX = this.prevX+1;
-            } else if (destinationX < this.prevX){
-                this.prevX= this.prevX-1;
+            if(destinationX > this.imageX){
+                this.imageX = this.imageX+1;
+            } else if (destinationX < this.imageX){
+                this.imageX= this.imageX-1;
             }
-            if(destinationY > this.prevY){
-                this.prevY = this.prevY+1;
-            } else if (destinationY < this.prevY){
-                this.prevY = this.prevY-1;
+            if(destinationY > this.imageY){
+                this.imageY = this.imageY+1;
+            } else if (destinationY < this.imageY){
+                this.imageY = this.imageY-1;
             }*/
 
 
