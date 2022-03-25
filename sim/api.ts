@@ -3,29 +3,30 @@
 namespace pxsim.robot {
     /**
      * Moves the sprite forward
-     * @param steps number of steps to move, eg: 1
      */
     //% weight=90
-    //% blockId=sampleForward block="forward %steps"
+    //% blockId=sampleForward block="forward"
     export function forwardAsync() {
         return board().sprite.forwardAsync()
     }
 
     /**
      * Moves the sprite forward
-     * @param direction the direction to turn, eg: Direction.Left
-     * @param angle degrees to turn, eg:90
+     * @param compass turn to compass direction
      */
     //% weight=85
-    //% blockId=sampleTurn block="turn %direction|by %angle degrees"
-    //% angle.min=-180 angle.max=180
-    export function turnAsync(direction: Direction, angle: number) {
+    //% blockId=sampleTurn block="turn %compass"
+    export function turnAsync(compass: Compass) {
         let b = board();
 
-        if (direction == Direction.Left)
-            b.sprite.angle -= angle;
-        else
-            b.sprite.angle += angle;
+        if (compass == Compass.north)
+            b.sprite.compass = Compass.north;
+        else if (compass == Compass.east)
+            b.sprite.compass = Compass.east;
+        else if (compass == Compass.south)
+            b.sprite.compass = Compass.south;
+        else if (compass == Compass.west)
+            b.sprite.compass = Compass.west;
         return pxsim.U.delay(400);
     }
 
@@ -88,13 +89,13 @@ namespace pxsim {
          * The X-coordiante
          */
         //%
-        public x = 50;
+        public x = (window.innerWidth - 10) / 2;
          /**
          * The Y-coordiante
          */
         //%
-        public y = 50;
-        public angle = 90;
+        public y = (window.innerHeight - 10) / 2;
+        public compass:Compass = Compass.north;
         
         constructor() {
         }
@@ -107,28 +108,60 @@ namespace pxsim {
         //%
         public forwardAsync() {
 
-            this.x += 1;
-            this.y;
+            if (this.compass == Compass.north){
+                this.x;
+                this.y -= 1;
+            } else if (this.compass == Compass.east){
+                this.x += 1;
+                this.y;
+            } else if (this.compass == Compass.south){
+                this.x;
+                this.y += 1;
+            } else if (this.compass == Compass.west){
+                this.x -= 1;
+                this.y;
+            }
 
             /*let deg = this.angle / 180 * Math.PI;
             this.x += Math.cos(deg) * steps * 10;
             this.y += Math.sin(deg) * steps * 10;*/
             board().updateView();
-
-            if (this.x < 0 || this.y < 0)
-                board().bus.queue("robot", "BUMP");
-
             return pxsim.U.delay(10)
         }
     }
 }
 
 namespace pxsim.sprites {
-    /**
-     * Creates a new sprite
-     */
-    //% blockId="sampleCreate" block="createSprite"
-    export function createSprite(): Sprite {
-        return new Sprite();
+
+    export class createSprites {
+        public objCreate:boolean = false;
+        public objX:number;
+        public objY:number;
+        public objWidth:number;
+        public objHeight:number;
+
+        constructor(){}
+
+        public createSprite(objX:number, objY:number, objWidth:number, objHeight:number) {
+            this.objCreate = true;
+            this.objX = objX;
+            this.objX = objY;
+            this.objWidth = objWidth;
+            this.objHeight = objHeight;
+            board().updateView();
+        }
+    }
+
+        /**
+         * Creates a new sprite
+         * @param objX the sprites x position
+         * @param objY the sprites y position
+         * @param objWidth the sprites width
+         * @param objHeight the sprites height
+         */
+        //% weight=90
+        //% blockId="createSprite" block="Create new sprite|x: %objX|y: %objY|width: %objWidth|height: %objHeight"
+    export function createSprite(objX:number, objY:number, objWidth:number, objHeight:number){
+        return board().object.createSprite(objX, objY, objWidth, objHeight);
     }
 }

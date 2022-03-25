@@ -2,23 +2,20 @@
 declare namespace robot {
     /**
      * Moves the sprite forward
-     * @param steps number of steps to move, eg: 1
      */
     //% weight=90
-    //% blockId=sampleForward block="forward %steps"
+    //% blockId=sampleForward block="forward"
     //% shim=robot::forwardAsync promise
     function forward(): void;
 
     /**
      * Moves the sprite forward
-     * @param direction the direction to turn, eg: Direction.Left
-     * @param angle degrees to turn, eg:90
+     * @param compass turn to compass direction
      */
     //% weight=85
-    //% blockId=sampleTurn block="turn %direction|by %angle degrees"
-    //% angle.min=-180 angle.max=180
+    //% blockId=sampleTurn block="turn %compass"
     //% shim=robot::turnAsync promise
-    function turn(direction: Direction, angle: number): void;
+    function turn(compass: Compass): void;
 
     /**
      * Triggers when the robot bumps a wall
@@ -88,10 +85,15 @@ declare namespace console {
 declare namespace sprites {
     /**
      * Creates a new sprite
+     * @param objX the sprites x position
+     * @param objY the sprites y position
+     * @param objWidth the sprites width
+     * @param objHeight the sprites height
      */
-    //% blockId="sampleCreate" block="createSprite"
+    //% weight=90
+    //% blockId="createSprite" block="Create new sprite|x: %objX|y: %objY|width: %objWidth|height: %objHeight"
     //% shim=sprites::createSprite
-    function createSprite(): Sprite;
+    function createSprite(objX: number, objY: number, objWidth: number, objHeight: number): void;
 
 }
 

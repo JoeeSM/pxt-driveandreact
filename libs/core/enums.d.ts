@@ -5,5 +5,14 @@ declare const enum Direction {
     Right
 }
 
-
+declare const enum Compass {
+    //% block=north
+    north,
+    //% block=east
+    east,
+    //% block=south
+    south,
+    //% block=west
+    west
+}
 

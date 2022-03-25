@@ -22,6 +22,7 @@ namespace pxsim {
     export class Board extends pxsim.BaseBoard {
         public bus: pxsim.EventBus;
         public sprite : Sprite;
+        public object : sprites.createSprites;
         public canvas : HTMLCanvasElement;
         public ctx : CanvasRenderingContext2D;
         public image : HTMLImageElement;
@@ -31,11 +32,12 @@ namespace pxsim {
             this.bus = new pxsim.EventBus(runtime, this);
             this.canvas = <HTMLCanvasElement>document.getElementById("canvas");
             this.image = new Image();
-            this.image.src = "/static/robotBoard.png";
-            this.canvas.width = window.innerWidth;
-            this.canvas.height = window.innerHeight;
+            this.image.src = "/static/robotBoardNorth.png";
+            this.canvas.width = window.innerWidth - 10;
+            this.canvas.height = window.innerHeight - 10;
             this.ctx = this.canvas.getContext("2d");
             this.sprite = new Sprite();
+            this.object = new sprites.createSprites();
             this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
         }
         
@@ -47,58 +49,25 @@ namespace pxsim {
         }       
         
         updateView() {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
+            this.ctx.clearRect(0, 0, this.canvas.width - 10, this.canvas.height - 10);
+            if (this.sprite.compass == Compass.north){
+                this.image.src = "/static/robotBoardNorth.png";
+                this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
+            } else if (this.sprite.compass == Compass.east){
+                this.image.src = "/static/robotBoardEast.png";
+                this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
+            } else if (this.sprite.compass == Compass.south){
+                this.image.src = "/static/robotBoardSouth.png";
+                this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
+            } else if (this.sprite.compass == Compass.west){
+                this.image.src = "/static/robotBoardWest.png";
+                this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
+            } 
 
-
-            /*
-            
-            This does nothing, only need above, rest is done in API?
-            
-            let destinationX = this.sprite.x;
-            let destinationY = this.sprite.y;
-            let prevX = this.imageX;
-            let prevY = this.imageY;
-            const delayLength = 100;
-
-            for(prevX; destinationX > prevX; prevX++){
-                this.imageX = this.imageX+1;
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                this.ctx.drawImage(this.image, prevX, prevY);
-                pxsim.U.delay(delayLength);
-            }
-            for(prevX; destinationX < prevX; prevX--){
-                this.imageX = this.imageX-1;
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                this.ctx.drawImage(this.image, prevX, prevY);
-                pxsim.U.delay(delayLength);
-            }
-            for(prevY; destinationY > prevY; prevY++){
-                this.imageY = this.imageY+1;
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                this.ctx.drawImage(this.image, prevX, prevY);
-                pxsim.U.delay(delayLength);
-            }
-            for(prevY; destinationY < prevY; prevY--){
-                this.imageY = this.imageY-1;
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                this.ctx.drawImage(this.image, prevX, prevY);
-                pxsim.U.delay(delayLength);
-            }
-
-            if(destinationX > this.imageX){
-                this.imageX = this.imageX+1;
-            } else if (destinationX < this.imageX){
-                this.imageX= this.imageX-1;
-            }
-            if(destinationY > this.imageY){
-                this.imageY = this.imageY+1;
-            } else if (destinationY < this.imageY){
-                this.imageY = this.imageY-1;
-            }*/
-
-
-            
+            if(this.object.objCreate == true){
+                //console.log(this.object.objX.toString());
+                this.ctx.fillRect(this.object.objX, this.object.objY, this.object.objWidth, this.object.objHeight);
+            }            
         }
     }
 }
