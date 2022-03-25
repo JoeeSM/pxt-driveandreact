@@ -165,7 +165,10 @@
   "robot.forward": "Moves the sprite forward",
   "robot.onBump": "Triggers when the robot bumps a wall",
   "robot.turn": "Moves the sprite forward",
-  "robot.turn|param|angle": "degrees to turn, eg:90",
-  "robot.turn|param|direction": "the direction to turn, eg: Direction.Left",
-  "sprites.createSprite": "Creates a new sprite"
+  "robot.turn|param|compass": "turn to compass direction",
+  "sprites.createSprite": "Creates a new sprite",
+  "sprites.createSprite|param|objHeight": "the sprites height",
+  "sprites.createSprite|param|objWidth": "the sprites width",
+  "sprites.createSprite|param|objX": "the sprites x position",
+  "sprites.createSprite|param|objY": "the sprites y position"
 }
