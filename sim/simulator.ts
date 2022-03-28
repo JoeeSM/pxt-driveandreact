@@ -22,7 +22,7 @@ namespace pxsim {
     export class Board extends pxsim.BaseBoard {
         public bus: pxsim.EventBus;
         public sprite : Sprite;
-        public object : sprites.createSprites;
+        public object : sprites.CreateSprites;
         public canvas : HTMLCanvasElement;
         public ctx : CanvasRenderingContext2D;
         public image : HTMLImageElement;
@@ -37,7 +37,7 @@ namespace pxsim {
             this.canvas.height = window.innerHeight - 10;
             this.ctx = this.canvas.getContext("2d");
             this.sprite = new Sprite();
-            this.object = new sprites.createSprites();
+            this.object = new sprites.CreateSprites();
             this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
         }
         
@@ -50,24 +50,40 @@ namespace pxsim {
         
         updateView() {
             this.ctx.clearRect(0, 0, this.canvas.width - 10, this.canvas.height - 10);
+
+            //if(this.object.objCreate == true){
+            //    this.ctx.fillRect(this.object.objX, this.object.objY, this.object.objWidth, this.object.objHeight);
+            // }   
+
+            for(let i:number = 0; this.object.objCreate > i; i++){
+                console.log(this.object.objCreate.toString());
+                this.ctx.fillRect(this.object.objX, this.object.objY, this.object.objWidth, this.object.objHeight);
+            }
+
             if (this.sprite.compass == Compass.north){
-                this.image.src = "/static/robotBoardNorth.png";
                 this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
             } else if (this.sprite.compass == Compass.east){
-                this.image.src = "/static/robotBoardEast.png";
-                this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
+                const angle = 90 * Math.PI / 180;
+                this.ctx.save();
+                this.ctx.translate(this.sprite.x, this.sprite.y);
+                this.ctx.rotate(angle);
+                this.ctx.drawImage(this.image, 0, 0 - this.image.height/2);
+                this.ctx.restore();
             } else if (this.sprite.compass == Compass.south){
-                this.image.src = "/static/robotBoardSouth.png";
-                this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
+                const angle = 180 * Math.PI / 180;
+                this.ctx.save();
+                this.ctx.translate(this.sprite.x, this.sprite.y);
+                this.ctx.rotate(angle);
+                this.ctx.drawImage(this.image, 0 - this.image.width, 0 - this.image.height/2);
+                this.ctx.restore();
             } else if (this.sprite.compass == Compass.west){
-                this.image.src = "/static/robotBoardWest.png";
-                this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
+                const angle = 270 * Math.PI / 180;
+                this.ctx.save();
+                this.ctx.translate(this.sprite.x, this.sprite.y);
+                this.ctx.rotate(angle);
+                this.ctx.drawImage(this.image, 0 - this.image.width, 0 - this.image.height/2);
+                this.ctx.restore();
             } 
-
-            if(this.object.objCreate == true){
-                //console.log(this.object.objX.toString());
-                this.ctx.fillRect(this.object.objX, this.object.objY, this.object.objWidth, this.object.objHeight);
-            }            
         }
     }
 }

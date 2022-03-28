@@ -133,8 +133,8 @@ namespace pxsim {
 
 namespace pxsim.sprites {
 
-    export class createSprites {
-        public objCreate:boolean = false;
+    export class CreateSprites {
+        public objCreate:number = 0;
         public objX:number;
         public objY:number;
         public objWidth:number;
@@ -143,9 +143,9 @@ namespace pxsim.sprites {
         constructor(){}
 
         public createSprite(objX:number, objY:number, objWidth:number, objHeight:number) {
-            this.objCreate = true;
+            this.objCreate += 1;
             this.objX = objX;
-            this.objX = objY;
+            this.objY = objY;
             this.objWidth = objWidth;
             this.objHeight = objHeight;
             board().updateView();
