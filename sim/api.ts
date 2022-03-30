@@ -108,25 +108,44 @@ namespace pxsim {
         //%
         public forwardAsync() {
 
+            let speed = 1;
+
             if (this.compass == Compass.north){
-                this.x;
-                this.y -= 1;
+                if(board().object.objY + board().object.objHeight >= board().sprite.y){
+                    this.x;
+                    this.y;
+                } else {
+                    this.x;
+                    this.y -= speed;
+                }
             } else if (this.compass == Compass.east){
-                this.x += 1;
-                this.y;
+                if(board().object.objX <= board().sprite.x + board().image.height / 2){
+                    this.x;
+                    this.y;
+                } else {
+                    this.x += speed;
+                    this.y;
+                }
             } else if (this.compass == Compass.south){
-                this.x;
-                this.y += 1;
+                if(board().object.objY <= board().sprite.y + board().image.height / 2){
+                    this.x;
+                    this.y;
+                } else {
+                    this.x;
+                    this.y += speed;
+                }
             } else if (this.compass == Compass.west){
-                this.x -= 1;
-                this.y;
+                if(board().object.objX + board().object.objWidth >= board().sprite.x - board().image.height / 2){
+                    this.x;
+                    this.y;
+                } else {
+                    this.x -= speed;
+                    this.y;
+                }
             }
 
-            /*let deg = this.angle / 180 * Math.PI;
-            this.x += Math.cos(deg) * steps * 10;
-            this.y += Math.sin(deg) * steps * 10;*/
             board().updateView();
-            return pxsim.U.delay(10)
+            return pxsim.U.delay(1)
         }
     }
 }
