@@ -42,7 +42,7 @@
   "parseInt|block": "parse to integer %text",
   "randint|block": "pick random %min|to %limit",
   "robot.forward|block": "forward",
-  "robot.onBump|block": "on bump",
+  "robot.onBump|block": "bump",
   "robot.turn|block": "turn %compass",
   "robot|block": "robot",
   "sprites.createSprite|block": "Create new sprite|x: %objX|y: %objY|width: %objWidth|height: %objHeight",

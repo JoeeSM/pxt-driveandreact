@@ -56,7 +56,6 @@ namespace pxsim {
             // }   
 
             for(let i:number = 0; this.object.objCreate > i; i++){
-                console.log(this.object.objCreate.toString());
                 this.ctx.fillRect(this.object.objX, this.object.objY, this.object.objWidth, this.object.objHeight);
             }
 

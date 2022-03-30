@@ -19,11 +19,10 @@ declare namespace robot {
 
     /**
      * Triggers when the robot bumps a wall
-     * @param handler 
      */
-    //% blockId=onBump block="on bump"
+    //% blockId=onBump block="bump"
     //% shim=robot::onBump
-    function onBump(handler: () => void): void;
+    function onBump(): boolean;
 
 }
 declare namespace loops {

@@ -32,13 +32,15 @@ namespace pxsim.robot {
 
     /**
      * Triggers when the robot bumps a wall
-     * @param handler 
      */
-    //% blockId=onBump block="on bump"
-    export function onBump(handler: RefAction) {
+    //% blockId=onBump block="bump"
+    export function onBump() {
         let b = board();
-
-        b.bus.listen("robot", "Bump", handler);
+        if(b.sprite.onBump == true){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
@@ -96,6 +98,7 @@ namespace pxsim {
         //%
         public y = (window.innerHeight - 10) / 2;
         public compass:Compass = Compass.north;
+        public onBump:boolean = false;
         
         constructor() {
         }
@@ -107,38 +110,50 @@ namespace pxsim {
          */
         //%
         public forwardAsync() {
-
+            let b = board();
             let speed = 1;
 
             if (this.compass == Compass.north){
-                if(board().object.objY + board().object.objHeight >= board().sprite.y){
+                if(b.object.objY + b.object.objHeight >= b.sprite.y && 
+                    b.object.objX < b.sprite.x + b.image.width && b.object.objX + b.object.objWidth > b.sprite.x){
+                    this.onBump = true;
                     this.x;
                     this.y;
                 } else {
+                    this.onBump = false;
                     this.x;
                     this.y -= speed;
                 }
             } else if (this.compass == Compass.east){
-                if(board().object.objX <= board().sprite.x + board().image.height / 2){
+                if(b.object.objX <= b.sprite.x + b.image.height / 2 && 
+                    b.object.objY < b.sprite.y + b.image.width && b.object.objY + b.object.objHeight > b.sprite.y){
+                    this.onBump = true;
                     this.x;
                     this.y;
                 } else {
+                    this.onBump = false;
                     this.x += speed;
                     this.y;
                 }
             } else if (this.compass == Compass.south){
-                if(board().object.objY <= board().sprite.y + board().image.height / 2){
+                if(b.object.objY <= b.sprite.y + b.image.height / 2 &&
+                b.object.objX < b.sprite.x + b.image.width && b.object.objX + b.object.objWidth > b.sprite.x){
+                    this.onBump = true;
                     this.x;
                     this.y;
                 } else {
+                    this.onBump = false;
                     this.x;
                     this.y += speed;
                 }
             } else if (this.compass == Compass.west){
-                if(board().object.objX + board().object.objWidth >= board().sprite.x - board().image.height / 2){
+                if(b.object.objX + b.object.objWidth >= b.sprite.x - b.image.height / 2 && 
+                b.object.objY < b.sprite.y + b.image.width && b.object.objY + b.object.objHeight > b.sprite.y){
+                    this.onBump = true;
                     this.x;
                     this.y;
                 } else {
+                    this.onBump = false;
                     this.x -= speed;
                     this.y;
                 }
