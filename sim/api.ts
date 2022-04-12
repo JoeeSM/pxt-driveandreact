@@ -7,7 +7,7 @@ namespace pxsim.robot {
     //% weight=90
     //% blockId=sampleForward block="forward"
     export function forwardAsync() {
-        return board().sprite.forwardAsync()
+        return board().sprite.forwardAsync();
     }
 
     /**
@@ -19,15 +19,25 @@ namespace pxsim.robot {
     export function turnAsync(compass: Compass) {
         let b = board();
 
-        if (compass == Compass.north)
+        if (compass === Compass.north)
             b.sprite.compass = Compass.north;
-        else if (compass == Compass.east)
+        else if (compass === Compass.east)
             b.sprite.compass = Compass.east;
-        else if (compass == Compass.south)
+        else if (compass === Compass.south)
             b.sprite.compass = Compass.south;
-        else if (compass == Compass.west)
+        else if (compass === Compass.west)
             b.sprite.compass = Compass.west;
         return pxsim.U.delay(400);
+    }
+
+    /**
+     * Moves the sprite backwards
+     * @param meters how far to reverse
+     */
+    //% weight=85
+    //% blockId=reverse block="reverse %meters meters"
+    export function reverseAsync(meters:number){
+        return board().sprite.reverseAsync(meters);
     }
 
     /**
@@ -36,7 +46,21 @@ namespace pxsim.robot {
     //% blockId=onBump block="bump"
     export function onBump() {
         let b = board();
-        if(b.sprite.onBump == true){
+        if(b.sprite.onBump === true){
+            console.log("bump");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * returns the direction the sprite is facing
+     */
+    //% blockId=direction block="direction %compass"
+    export function direction(compass:Compass){
+        let b = board();
+        if (b.sprite.compass === compass){
             return true;
         } else {
             return false;
@@ -97,70 +121,152 @@ namespace pxsim {
          */
         //%
         public y = (window.innerHeight - 10) / 2;
-        public compass:Compass = Compass.north;
-        public onBump:boolean = false;
+        public compass:Compass;
+        public onBump:boolean;
+        public width:number;
+        public height:number;
         
         constructor() {
+            this.compass = Compass.north;
+            this.onBump = false;
         }
         
         private foobar() {}
 
         /**
-         * Move the thing forward
+         * Move the thing forward and detect objects.
          */
         //%
         public forwardAsync() {
             let b = board();
             let speed = 1;
 
-            if (this.compass == Compass.north){
-                if(b.object.objY + b.object.objHeight >= b.sprite.y && 
-                    b.object.objX < b.sprite.x + b.image.width && b.object.objX + b.object.objWidth > b.sprite.x){
-                    this.onBump = true;
-                    this.x;
-                    this.y;
-                } else {
-                    this.onBump = false;
-                    this.x;
-                    this.y -= speed;
+            function collisionDetection(objArray:Array<sprites.CreateSprites>, sprite:Sprite){
+                 for (let i:number = 0; objArray.length > i; i++){
+                     if(objArray[i].objX + objArray[i].objWidth >= sprite.x - b.sprite.width &&
+                        objArray[i].objX <= sprite.x + sprite.width && 
+                        objArray[i].objY + objArray[i].objHeight >= sprite.y &&
+                        objArray[i].objY <= sprite.y + sprite.height ||
+                        b.sprite.x + b.sprite.width >= innerWidth - 10 || 
+                        b.sprite.x <= 10 ||
+                        b.sprite.y + b.sprite.height >= innerHeight - 10 || 
+                        b.sprite.y <= 10){
+                            return true;
+                    } 
                 }
-            } else if (this.compass == Compass.east){
-                if(b.object.objX <= b.sprite.x + b.image.height / 2 && 
-                    b.object.objY < b.sprite.y + b.image.width && b.object.objY + b.object.objHeight > b.sprite.y){
-                    this.onBump = true;
-                    this.x;
-                    this.y;
-                } else {
-                    this.onBump = false;
-                    this.x += speed;
-                    this.y;
-                }
-            } else if (this.compass == Compass.south){
-                if(b.object.objY <= b.sprite.y + b.image.height / 2 &&
-                b.object.objX < b.sprite.x + b.image.width && b.object.objX + b.object.objWidth > b.sprite.x){
-                    this.onBump = true;
-                    this.x;
-                    this.y;
-                } else {
-                    this.onBump = false;
-                    this.x;
-                    this.y += speed;
-                }
-            } else if (this.compass == Compass.west){
-                if(b.object.objX + b.object.objWidth >= b.sprite.x - b.image.height / 2 && 
-                b.object.objY < b.sprite.y + b.image.width && b.object.objY + b.object.objHeight > b.sprite.y){
-                    this.onBump = true;
-                    this.x;
-                    this.y;
-                } else {
-                    this.onBump = false;
-                    this.x -= speed;
-                    this.y;
-                }
+                return false;
+            }
+
+            switch (b.sprite.compass){
+                case Compass.north:
+                    b.sprite.width = b.image.width;
+                    b.sprite.height = b.image.height;
+                    if(b.objArray.length > 0){
+                        if(collisionDetection(b.objArray, b.sprite)){
+                                this.onBump = true;
+                                this.x;
+                                this.y;
+                            } else {
+                                this.onBump = false;
+                                this.x;
+                                this.y -= speed;
+                            }
+                    } else {
+                        this.onBump = false;
+                        this.x;
+                        this.y -= speed;
+                    }
+                break;
+
+                case Compass.east:
+                    b.sprite.width = b.image.height;
+                    b.sprite.height = b.image.width;
+                    if(b.objArray.length > 0){
+                            if(collisionDetection(b.objArray, b.sprite)){
+                                this.onBump = true;
+                                this.x;
+                                this.y;
+                            } else {
+                                this.onBump = false;
+                                this.x += speed;
+                                this.y;
+                            }
+                    } else {
+                        this.onBump = false;
+                        this.x += speed;
+                        this.y;
+                    }
+                break;
+
+                case Compass.south:
+                    b.sprite.width = b.image.width;
+                    b.sprite.height = b.image.height;
+                    if(b.objArray.length > 0){
+                            if(collisionDetection(b.objArray, b.sprite)){
+                                this.onBump = true;
+                                this.x;
+                                this.y;
+                            } else {
+                                this.onBump = false;
+                                this.x;
+                                this.y += speed;
+                            }
+                    } else {
+                        this.onBump = false;
+                        this.x;
+                        this.y += speed;
+                    }
+                break;
+
+                case Compass.west:
+                    b.sprite.width = b.image.height;
+                    b.sprite.height = b.image.width;
+                    if(b.objArray.length > 0){
+                            if(collisionDetection(b.objArray, b.sprite)){
+                                this.onBump = true;
+                                this.x;
+                                this.y;
+                            } else {
+                                this.onBump = false;
+                                this.x -= speed;
+                                this.y;
+                            }
+                    } else {
+                        this.onBump = false;
+                        this.x -= speed;
+                        this.y;
+                    }
+                break;
             }
 
             board().updateView();
-            return pxsim.U.delay(1)
+            return pxsim.U.delay(1);
+        }
+
+        /**
+         * Move the thing backwards.
+         */
+        //%
+        public reverseAsync(meters : number){
+            let b = board();
+
+            if(b.sprite.compass === Compass.north){
+                b.sprite.y += meters;
+                this.onBump = false;
+            } else if (b.sprite.compass === Compass.east){
+                b.sprite.x -= meters;
+                this.onBump = false;
+            } else if (b.sprite.compass === Compass.south){
+                b.sprite.y -= meters;
+                this.onBump = false;
+            } else if (b.sprite.compass === Compass.west){
+                b.sprite.x += meters;
+                this.onBump = false;
+            }
+
+            board().updateView();
+            return pxsim.U.delay(400);
+
         }
     }
 }
@@ -168,7 +274,7 @@ namespace pxsim {
 namespace pxsim.sprites {
 
     export class CreateSprites {
-        public objCreate:number = 0;
+        public objAmount:number;
         public objX:number;
         public objY:number;
         public objWidth:number;
@@ -176,26 +282,26 @@ namespace pxsim.sprites {
 
         constructor(){}
 
-        public createSprite(objX:number, objY:number, objWidth:number, objHeight:number) {
-            this.objCreate += 1;
-            this.objX = objX;
-            this.objY = objY;
-            this.objWidth = objWidth;
-            this.objHeight = objHeight;
+        public createSprite(objAmount:number) {
+            this.objAmount = objAmount;
             board().updateView();
+        }
+
+        public randomizeSprite(){
+            this.objWidth = Math.floor(Math.random() * (50 - 10) + 10);
+            this.objHeight = Math.floor(Math.random() * (50 - 10) + 10);
+            this.objX = Math.floor(Math.random() * (innerWidth - 10) + this.objWidth);
+            this.objY = Math.floor(Math.random() * (innerHeight - 10) + this.objHeight);
         }
     }
 
         /**
          * Creates a new sprite
-         * @param objX the sprites x position
-         * @param objY the sprites y position
-         * @param objWidth the sprites width
-         * @param objHeight the sprites height
+         * @param objAmount amount of random objects to be drawn
          */
         //% weight=90
-        //% blockId="createSprite" block="Create new sprite|x: %objX|y: %objY|width: %objWidth|height: %objHeight"
-    export function createSprite(objX:number, objY:number, objWidth:number, objHeight:number){
-        return board().object.createSprite(objX, objY, objWidth, objHeight);
+        //% blockId="createSprite" block="Amount of blocks: %objAmount"
+    export function createSprite(objAmount:number){
+        return board().object.createSprite(objAmount);
     }
 }

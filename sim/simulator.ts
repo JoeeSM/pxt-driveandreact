@@ -20,25 +20,32 @@ namespace pxsim {
      * Do not store state anywhere else!
      */
     export class Board extends pxsim.BaseBoard {
-        public bus: pxsim.EventBus;
+        public bus : pxsim.EventBus;
         public sprite : Sprite;
         public object : sprites.CreateSprites;
         public canvas : HTMLCanvasElement;
         public ctx : CanvasRenderingContext2D;
         public image : HTMLImageElement;
+        public objArray : Array<sprites.CreateSprites>;
+        public objTracker : number;
         
         constructor() {
             super();
+            this.sprite = new Sprite();
             this.bus = new pxsim.EventBus(runtime, this);
+            this.object = new sprites.CreateSprites();
+            this.object.objAmount = 0;
+            this.objTracker = 0;
             this.canvas = <HTMLCanvasElement>document.getElementById("canvas");
             this.image = new Image();
             this.image.src = "/static/robotBoardNorth.png";
             this.canvas.width = window.innerWidth - 10;
             this.canvas.height = window.innerHeight - 10;
             this.ctx = this.canvas.getContext("2d");
-            this.sprite = new Sprite();
-            this.object = new sprites.CreateSprites();
+            this.objArray = new Array<sprites.CreateSprites>();
             this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
+            this.sprite.width = this.image.width;
+            this.sprite.height = this.image.height;
         }
         
         initAsync(msg: pxsim.SimulatorRunMessage): Promise<void> {
@@ -51,31 +58,38 @@ namespace pxsim {
         updateView() {
             this.ctx.clearRect(0, 0, this.canvas.width - 10, this.canvas.height - 10);
 
-            //if(this.object.objCreate == true){
-            //    this.ctx.fillRect(this.object.objX, this.object.objY, this.object.objWidth, this.object.objHeight);
-            // }   
-
-            for(let i:number = 0; this.object.objCreate > i; i++){
-                this.ctx.fillRect(this.object.objX, this.object.objY, this.object.objWidth, this.object.objHeight);
+            for(this.objTracker; this.object.objAmount > this.objTracker; this.objTracker++){
+                let objectExample = new sprites.CreateSprites();
+                objectExample.randomizeSprite();
+                this.objArray.push(objectExample);
             }
+            console.log(this.objArray.length.toString());
+                //need to make sure this stores 2 seperate objects with different values.
 
-            if (this.sprite.compass == Compass.north){
+            if(this.objArray.length > 0){
+                for(let i:number = 0; this.objArray.length > i; i++){
+                    this.ctx.fillRect(this.objArray[i].objX, this.objArray[i].objY, this.objArray[i].objWidth, this.objArray[i].objHeight);
+                    //need to make sure this is drawing each object and not just the last.
+                }
+            } 
+
+            if (this.sprite.compass === Compass.north){
                 this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
-            } else if (this.sprite.compass == Compass.east){
+            } else if (this.sprite.compass === Compass.east){
                 const angle = 90 * Math.PI / 180;
                 this.ctx.save();
                 this.ctx.translate(this.sprite.x, this.sprite.y);
                 this.ctx.rotate(angle);
                 this.ctx.drawImage(this.image, 0, 0 - this.image.height/2);
                 this.ctx.restore();
-            } else if (this.sprite.compass == Compass.south){
+            } else if (this.sprite.compass === Compass.south){
                 const angle = 180 * Math.PI / 180;
                 this.ctx.save();
                 this.ctx.translate(this.sprite.x, this.sprite.y);
                 this.ctx.rotate(angle);
                 this.ctx.drawImage(this.image, 0 - this.image.width, 0 - this.image.height/2);
                 this.ctx.restore();
-            } else if (this.sprite.compass == Compass.west){
+            } else if (this.sprite.compass === Compass.west){
                 const angle = 270 * Math.PI / 180;
                 this.ctx.save();
                 this.ctx.translate(this.sprite.x, this.sprite.y);
