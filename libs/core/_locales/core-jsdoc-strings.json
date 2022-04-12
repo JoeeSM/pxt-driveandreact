@@ -110,7 +110,8 @@
   "Number.toString": "Returns a string representation of a number.",
   "Object.keys": "Return the field names in an object.",
   "Sprite": "A ghost on the screen.",
-  "Sprite.forward": "Move the thing forward",
+  "Sprite.forward": "Move the thing forward and detect objects.",
+  "Sprite.reverse": "Move the thing backwards.",
   "Sprite.x": "The X-coordiante",
   "Sprite.y": "The Y-coordiante",
   "String": "Combine, split, and search text strings.",
@@ -162,13 +163,13 @@
   "randint|param|max": "the upper inclusive bound, eg: 10",
   "randint|param|min": "the lower inclusive bound, eg: 0",
   "robot": "Basic functionalities.",
+  "robot.direction": "returns the direction the sprite is facing",
   "robot.forward": "Moves the sprite forward",
   "robot.onBump": "Triggers when the robot bumps a wall",
+  "robot.reverse": "Moves the sprite backwards",
+  "robot.reverse|param|meters": "how far to reverse",
   "robot.turn": "Moves the sprite forward",
   "robot.turn|param|compass": "turn to compass direction",
   "sprites.createSprite": "Creates a new sprite",
-  "sprites.createSprite|param|objHeight": "the sprites height",
-  "sprites.createSprite|param|objWidth": "the sprites width",
-  "sprites.createSprite|param|objX": "the sprites x position",
-  "sprites.createSprite|param|objY": "the sprites y position"
+  "sprites.createSprite|param|objAmount": "amount of random objects to be drawn"
 }

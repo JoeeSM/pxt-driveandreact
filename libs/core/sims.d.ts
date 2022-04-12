@@ -18,11 +18,27 @@ declare namespace robot {
     function turn(compass: Compass): void;
 
     /**
+     * Moves the sprite backwards
+     * @param meters how far to reverse
+     */
+    //% weight=85
+    //% blockId=reverse block="reverse %meters meters"
+    //% shim=robot::reverseAsync promise
+    function reverse(meters: number): void;
+
+    /**
      * Triggers when the robot bumps a wall
      */
     //% blockId=onBump block="bump"
     //% shim=robot::onBump
     function onBump(): boolean;
+
+    /**
+     * returns the direction the sprite is facing
+     */
+    //% blockId=direction block="direction %compass"
+    //% shim=robot::direction
+    function direction(compass: Compass): boolean;
 
 }
 declare namespace loops {
@@ -74,25 +90,29 @@ declare namespace console {
         public y: number;
 
         /**
-         * Move the thing forward
+         * Move the thing forward and detect objects.
          */
         //%
         //% shim=.forwardAsync promise
         public forward(): void;
 
+        /**
+         * Move the thing backwards.
+         */
+        //%
+        //% shim=.reverseAsync promise
+        public reverse(meters: number): void;
+
     }
 declare namespace sprites {
     /**
      * Creates a new sprite
-     * @param objX the sprites x position
-     * @param objY the sprites y position
-     * @param objWidth the sprites width
-     * @param objHeight the sprites height
+     * @param objAmount amount of random objects to be drawn
      */
     //% weight=90
-    //% blockId="createSprite" block="Create new sprite|x: %objX|y: %objY|width: %objWidth|height: %objHeight"
+    //% blockId="createSprite" block="Amount of blocks: %objAmount"
     //% shim=sprites::createSprite
-    function createSprite(objX: number, objY: number, objWidth: number, objHeight: number): void;
+    function createSprite(objAmount: number): void;
 
 }
 
