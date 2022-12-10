@@ -58,21 +58,27 @@ namespace pxsim {
         updateView() {
             this.ctx.clearRect(0, 0, this.canvas.width - 10, this.canvas.height - 10);
 
+            //Create and randomize each object for the amount specified
             for(this.objTracker; this.object.objAmount > this.objTracker; this.objTracker++){
                 let objectExample = new sprites.CreateSprites();
                 objectExample.randomizeSprite();
-                this.objArray.push(objectExample);
+
+                //Attempted to specify spawn area for robot 
+                do{
+                    this.objArray.push(objectExample);
+                } while (objectExample.objX < ((innerWidth / 2) - 40) - objectExample.objWidth && objectExample.objX > (innerWidth / 2) + 40 &&
+                         objectExample.objY < ((innerHeight / 2) - 40) - objectExample.objHeight && objectExample.objY > (innerHeight / 2) + 40);
             }
             console.log(this.objArray.length.toString());
-                //need to make sure this stores 2 seperate objects with different values.
 
             if(this.objArray.length > 0){
                 for(let i:number = 0; this.objArray.length > i; i++){
                     this.ctx.fillRect(this.objArray[i].objX, this.objArray[i].objY, this.objArray[i].objWidth, this.objArray[i].objHeight);
-                    //need to make sure this is drawing each object and not just the last.
                 }
+                
             } 
 
+            //rotate HTML canvas to draw robot image in correct orientation
             if (this.sprite.compass === Compass.north){
                 this.ctx.drawImage(this.image, this.sprite.x, this.sprite.y);
             } else if (this.sprite.compass === Compass.east){

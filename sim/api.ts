@@ -2,7 +2,7 @@
 
 namespace pxsim.robot {
     /**
-     * Moves the sprite forward
+     * Moves the robot forward
      */
     //% weight=90
     //% blockId=sampleForward block="forward"
@@ -11,7 +11,7 @@ namespace pxsim.robot {
     }
 
     /**
-     * Moves the sprite forward
+     * Moves the robot forward
      * @param compass turn to compass direction
      */
     //% weight=85
@@ -31,7 +31,7 @@ namespace pxsim.robot {
     }
 
     /**
-     * Moves the sprite backwards
+     * Moves the robot backwards
      * @param meters how far to reverse
      */
     //% weight=85
@@ -141,6 +141,8 @@ namespace pxsim {
             let b = board();
             let speed = 1;
 
+            //Check for any colliding objects
+
             function collisionDetection(objArray:Array<sprites.CreateSprites>, sprite:Sprite){
                  for (let i:number = 0; objArray.length > i; i++){
                      if(objArray[i].objX + objArray[i].objWidth >= sprite.x - b.sprite.width &&
@@ -157,6 +159,7 @@ namespace pxsim {
                 return false;
             }
 
+            //Check direction then move forwards in specified direction
             switch (b.sprite.compass){
                 case Compass.north:
                     b.sprite.width = b.image.width;
@@ -244,7 +247,7 @@ namespace pxsim {
         }
 
         /**
-         * Move the thing backwards.
+         * Move the robot backwards.
          */
         //%
         public reverseAsync(meters : number){
@@ -282,16 +285,18 @@ namespace pxsim.sprites {
 
         constructor(){}
 
+        //Create specified amount of objects
         public createSprite(objAmount:number) {
             this.objAmount = objAmount;
             board().updateView();
         }
 
+        //randomize indidividual objects position and dimentions with restrictions
         public randomizeSprite(){
-            this.objWidth = Math.floor(Math.random() * (50 - 10) + 10);
-            this.objHeight = Math.floor(Math.random() * (50 - 10) + 10);
-            this.objX = Math.floor(Math.random() * (innerWidth - 10) + this.objWidth);
-            this.objY = Math.floor(Math.random() * (innerHeight - 10) + this.objHeight);
+                this.objWidth = Math.floor(Math.random() * (50 - 10) + 10);
+                this.objHeight = Math.floor(Math.random() * (50 - 10) + 10);
+                this.objX = Math.floor(Math.random() * (innerWidth - 10) + this.objWidth);
+                this.objY = Math.floor(Math.random() * (innerHeight - 10) + this.objHeight);
         }
     }
 

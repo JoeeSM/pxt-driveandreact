@@ -1,7 +1,7 @@
 // Auto-generated from simulator. Do not edit.
 declare namespace robot {
     /**
-     * Moves the sprite forward
+     * Moves the robot forward
      */
     //% weight=90
     //% blockId=sampleForward block="forward"
@@ -9,7 +9,7 @@ declare namespace robot {
     function forward(): void;
 
     /**
-     * Moves the sprite forward
+     * Moves the robot forward
      * @param compass turn to compass direction
      */
     //% weight=85
@@ -18,7 +18,7 @@ declare namespace robot {
     function turn(compass: Compass): void;
 
     /**
-     * Moves the sprite backwards
+     * Moves the robot backwards
      * @param meters how far to reverse
      */
     //% weight=85
@@ -97,7 +97,7 @@ declare namespace console {
         public forward(): void;
 
         /**
-         * Move the thing backwards.
+         * Move the robot backwards.
          */
         //%
         //% shim=.reverseAsync promise
